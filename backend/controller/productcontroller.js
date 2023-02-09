@@ -12,7 +12,8 @@ exports.createproduct = catchasyncerror(async (req,res,next)=>{
 
 // get all product
 exports.getallproduct = catchasyncerror(async (req,res)=>{
-    const resultPerPage = 5;
+    // const cookie = "SameSite = none;secure"
+    const resultPerPage = 8;
     const productcount = await productmodel.countDocuments();
     const apiFeatures = new ApiFeatures(productmodel.find(),req.query)
     .search()
@@ -20,7 +21,8 @@ exports.getallproduct = catchasyncerror(async (req,res)=>{
     .pagination(resultPerPage);
     const product = await apiFeatures.query;
     //const product = await productmodel.find();
-    res.status(200).json({success : true,product,productcount})  
+    res.status(200).json({success : true,product,productcount})
+    // .setHeader("set-cookie",[cookie]) 
     // Note :- productcount were add in getoneproduct by the tutor.So,please check it agin further
 });
 
